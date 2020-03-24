@@ -54,7 +54,7 @@ namespace dynamic_menu.Controls
             if (!Active)
                 return;
 
-            var key = Console.ReadKey();
+            var key = Console.ReadKey(true);
             switch (key.Key)
             {
                 case ConsoleKey.LeftArrow:
@@ -97,6 +97,14 @@ namespace dynamic_menu.Controls
                 ProcessKeyPress();
                 Thread.Sleep(ControlLoopSleep);
             } while (Active);
+        }
+
+        public async Task ActivateAsync()
+        {
+            await Task.Run(() =>
+            {
+                Activate();
+            });
         }
 
         private void Deactivate()

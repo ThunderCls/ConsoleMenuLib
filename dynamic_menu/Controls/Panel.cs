@@ -39,7 +39,7 @@ namespace dynamic_menu.Controls
 
         public void ProcessKeyPress()
         {
-            var key = Console.ReadKey();
+            var key = Console.ReadKey(true);
             switch (key.Key)
             {
                 case ConsoleKey.UpArrow:
@@ -53,9 +53,6 @@ namespace dynamic_menu.Controls
                 case ConsoleKey.Enter:
                     ActivateEntry();                    
                     break;
-
-                //case ConsoleKey.Tab:
-
             }
         }
 
@@ -77,6 +74,7 @@ namespace dynamic_menu.Controls
 
         private void MoveMarkerUp()
         {
+            // TODO: implement with TabIndex
             ControlIndex = (ControlIndex - 1 >= 0) ? ControlIndex -= 1 : Controls.Count - 1;
             Controls.ForEach(x => x.Deselect());
             Controls[ControlIndex].Select();
@@ -84,6 +82,7 @@ namespace dynamic_menu.Controls
 
         private void MoveMarkerDown()
         {
+            // TODO: implement with TabIndex
             ControlIndex = (ControlIndex + 1 < Controls.Count) ? ControlIndex += 1 : 0;
             Controls.ForEach(x => x.Deselect());
             Controls[ControlIndex].Select();
@@ -123,6 +122,14 @@ namespace dynamic_menu.Controls
                 ProcessKeyPress();
                 Thread.Sleep(ControlLoopSleep);
             } while (Active);
+        }
+
+        public async Task ActivateAsync()
+        {
+            await Task.Run(() =>
+            {
+                Activate();
+            });
         }
 
         public void Select()

@@ -23,7 +23,7 @@ namespace dynamic_menu.Controls
     }
 
     public interface IControl
-    {
+    {        
         IControl Parent { get; set; }
         Position CtrlPosition { get; set; }
         Size CtrlSize { get; set; }
@@ -31,23 +31,11 @@ namespace dynamic_menu.Controls
         bool Active { get; set; }
         int TabIndex { get; set; }
 
-        //void Show();
         void Draw();
         void Activate();
+        Task ActivateAsync();
         void ProcessKeyPress();
         void Select();
-        void Deselect();        
-
-        //public async Task ActivateAsync()
-        //{
-        //    await Task.Run(() =>
-        //    {
-        //        do
-        //        {
-        //            Draw();
-        //            ProcessKeyPress();
-        //        } while (Active);
-        //    });         
-        //}
+        void Deselect();
     }
 }

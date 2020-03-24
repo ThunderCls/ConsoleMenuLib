@@ -19,6 +19,13 @@ namespace dynamic_menu.Controls
         {
             throw new NotImplementedException();
         }
+        public async Task ActivateAsync()
+        {
+            await Task.Run(() =>
+            {
+                Activate();
+            });
+        }
 
         public void Deselect()
         {
