@@ -1,2 +1,2 @@
-# ConsoleMenuLib
- Console Menu Library
+# ConsoleUI
+ Console UI Framework Library
