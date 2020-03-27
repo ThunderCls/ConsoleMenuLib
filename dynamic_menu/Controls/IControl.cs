@@ -5,8 +5,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace dynamic_menu.Controls
+namespace ConsoleUI.Controls
 {
+    public static class Common
+    {
+        public static string SelectionSymbol = "►";
+        public static int ControlLoopSleep = 100;
+    }    
+
     public class Position
     {
         public int TopSpacing { get; set; }
@@ -37,5 +43,6 @@ namespace dynamic_menu.Controls
         void ProcessKeyPress();
         void Select();
         void Deselect();
+        //TODO: implement a ReDraw() function to repaint the control space only and it's children
     }
 }

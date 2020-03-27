@@ -45,14 +45,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\Button.cs" />
-    <Compile Include="Controls\Dialog.cs" />
+    <Compile Include="Controls\CheckBox.cs" />
+    <Compile Include="Controls\Panel.cs" />
     <Compile Include="Controls\IControl.cs" />
     <Compile Include="Controls\TextInput.cs" />
     <Compile Include="Menu\Menu.cs" />
     <Compile Include="Menu\Entry.cs" />
     <Compile Include="Menu\VerticalMenu.cs" />
     <Compile Include="Menu\HorizontalMenu.cs" />
-    <Compile Include="Controls\Panel.cs" />
+    <Compile Include="Controls\Dialog.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controls\Slider.cs" />

@@ -5,15 +5,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace dynamic_menu.Controls
+namespace ConsoleUI.Controls
 {
     public class Slider : IControl
     {
-        public const string SelectionSymbol = "►";
         private const char SliderLine = '─';
         private const char SliderMark = '▌';
-        private const int ControlLoopSleep = 100;
 
+        // TODO: implement
         public enum SliderPosition
         {
             Horizontal,
@@ -43,10 +42,11 @@ namespace dynamic_menu.Controls
 
         public Slider()
         {
-            Console.OutputEncoding = Encoding.Unicode;
-            Console.CursorVisible = false;
-            Active = false;
-            Selected = false;
+            CtrlPosition = new Position();
+            CtrlSize = new Size();
+            Caption = "Slide";
+            Maximum = 10;
+            Step = 1;
         }
 
         public void ProcessKeyPress()
@@ -95,7 +95,7 @@ namespace dynamic_menu.Controls
             {
                 Draw();
                 ProcessKeyPress();
-                Thread.Sleep(ControlLoopSleep);
+                Thread.Sleep(Common.ControlLoopSleep);
             } while (Active);
         }
 
@@ -148,7 +148,7 @@ namespace dynamic_menu.Controls
 
         private string GetMarker()
         {
-            return Selected ? SelectionSymbol : new string(' ', SelectionSymbol.Length);
+            return Selected ? Common.SelectionSymbol : new string(' ', Common.SelectionSymbol.Length);
         }
     }
 }

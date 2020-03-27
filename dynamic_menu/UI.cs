@@ -4,34 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dynamic_menu
+namespace ConsoleUI
 {
     class UI
     {
         public static Controls.Slider sliderContrast;
         public static Controls.Slider sliderBrightness;
         public static Controls.Button btnClose;
-        public static Controls.TextInput textInput;
+        public static Controls.TextInput txtName;
+        public static Controls.TextInput txtPassword;
         public static Controls.Button btnReset;
-        public static Controls.Panel mainPanel;
-        public static Controls.Panel panel;
-
+        public static Controls.Dialog mainDialog;
+        public static Controls.CheckBox checkSavePass;
         static private void CreateUI()
         {
-            panel = new Controls.Panel()
-            {
-                CtrlPosition = new Controls.Position
-                {
-                    LeftSpacing = 8,
-                    TopSpacing = 5
-                },
-                CtrlSize = new Controls.Size
-                {
-                    Height = 20,
-                    Width = 50
-                }
-            };
-            mainPanel = new Controls.Panel
+            mainDialog = new Controls.Dialog()
             {
                 CtrlPosition = new Controls.Position
                 {
@@ -42,7 +29,8 @@ namespace dynamic_menu
                 {
                     Height = 24,
                     Width = 60
-                }
+                },
+                Caption = " Form 1 "
             };
 
             sliderContrast = new Controls.Slider()
@@ -54,7 +42,6 @@ namespace dynamic_menu
                 Selected = true,
                 CtrlPosition = new Controls.Position
                 {
-                    //LeftSpacing = 8,
                     TopSpacing = 4,
                     LeftSpacing = 6,
                     LeftPadding = 2
@@ -68,7 +55,6 @@ namespace dynamic_menu
                 Value = 5,
                 CtrlPosition = new Controls.Position
                 {
-                    //LeftSpacing = 8,
                     TopSpacing = 6,
                     LeftSpacing = 6,
                     LeftPadding = 2
@@ -76,18 +62,63 @@ namespace dynamic_menu
             };
             sliderBrightness.OnValueChanged += Program.ValueChanged;
 
+            txtName = new Controls.TextInput
+            {
+                Caption = "    Name:",
+                MaxLength = 20,
+                //Border = false,
+                CtrlPosition = new Controls.Position
+                {
+                    TopSpacing = 9,
+                    LeftSpacing = 6
+                },
+                CtrlSize = new Controls.Size
+                {
+                    Width = 24,
+                    Height = 3
+                }
+            };
+
+            txtPassword = new Controls.TextInput
+            {
+                Caption = "Password:",
+                MaxLength = 20,
+                MaskChars = true,
+                //Border = false,
+                CtrlPosition = new Controls.Position
+                {
+                    TopSpacing = 12,
+                    LeftSpacing = 6
+                },
+                CtrlSize = new Controls.Size
+                {
+                    Width = 24,
+                    Height = 3
+                }
+            };
+
+            checkSavePass = new Controls.CheckBox
+            {
+                Caption = "Remember Password",
+                CtrlPosition = new Controls.Position
+                {
+                    TopSpacing = 14,
+                    LeftSpacing = 16
+                }
+            };
+
             btnClose = new Controls.Button
             {
                 Caption = "Close",
                 CtrlPosition = new Controls.Position
                 {
-                    TopSpacing = 10,
-                    LeftSpacing = 30,
+                    TopSpacing = 17,
+                    LeftSpacing = 35,
                     LeftPadding = 3
                 },
                 CtrlSize = new Controls.Size
                 {
-                    Height = 5,
+                    Height = 3,
                     Width = 13
                 }
             };
@@ -98,8 +129,8 @@ namespace dynamic_menu
                 Caption = "Reset",
                 CtrlPosition = new Controls.Position
                 {
-                    TopSpacing = 10,
-                    LeftSpacing = 10,
+                    TopSpacing = 17,
+                    LeftSpacing = 15,
                     LeftPadding = 3
                 },
                 CtrlSize = new Controls.Size
@@ -110,30 +141,19 @@ namespace dynamic_menu
             };
             btnReset.OnExecute += Program.ResetValues;
 
-            textInput = new Controls.TextInput
-            {
-                Caption = "Name:",
-                MaxLength = 10,
-                CtrlPosition = new Controls.Position
-                {
-                    TopSpacing = 8,
-                    LeftSpacing = 10
-                }
-            };
-
-            mainPanel.Draw();
-
-            panel.AddControl(sliderContrast);
-            panel.AddControl(sliderBrightness);
-            panel.AddControl(textInput);
-            panel.AddControl(btnReset);
-            panel.AddControl(btnClose);
+            mainDialog.AddControl(sliderContrast);
+            mainDialog.AddControl(sliderBrightness);
+            mainDialog.AddControl(txtName);
+            mainDialog.AddControl(txtPassword);
+            mainDialog.AddControl(checkSavePass);
+            mainDialog.AddControl(btnReset);
+            mainDialog.AddControl(btnClose);
         }
 
         public static void RunUI()
         {
             CreateUI();
-            panel.ActivateAsync();
+            mainDialog.ActivateAsync();
         }
     }
 }

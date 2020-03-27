@@ -5,19 +5,27 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace dynamic_menu.Controls
+namespace ConsoleUI.Controls
 {
     public class TextInput : IControl
     {
-        public const string SelectionSymbol = "►";
-        public const char InputCaret = '▌';
-        private const int ControlLoopSleep = 100;
+        private const char HorizontalLineSymbol = '─';
+        private const char VerticalLineSymbol = '│';
+        private const char LeftUpCornerSymbol = '┌';
+        private const char RightUpCornerSymbol = '┐';
+        private const char LeftDownCornerSymbol = '└';
+        private const char RightDownCornerSymbol = '┘';
+
+        private const char InputCaret = '▌';
 
         public IControl Parent { get; set; }
         public Position CtrlPosition { get; set; }
         public Size CtrlSize { get; set; }
         public bool Selected { get; set; }
         public bool Active { get; set; }
+        public bool MaskChars { get; set; }
+        public char Mask { get; set; }
+        public bool Border { get; set; }
         public int TabIndex { get; set; }
 
         public string Caption { get; set; }
@@ -41,9 +49,11 @@ namespace dynamic_menu.Controls
         {
             CtrlPosition = new Position();
             CtrlSize = new Size();
-            Caption = string.Empty;
+            Caption = "TextInput";
             Text = string.Empty;
             MaxLength = 0;
+            Mask = '*';
+            Border = true;
         }
 
         public void Draw()
@@ -53,11 +63,55 @@ namespace dynamic_menu.Controls
             int parentLeft = Parent?.CtrlPosition.LeftSpacing ?? 0;
             int parentTop = Parent?.CtrlPosition.TopSpacing ?? 0;
 
+            if (Border)
+            {
+                DrawWithBorders(parentLeft, parentTop);
+            }
+            else
+            {
+                DrawNoBorders(parentLeft, parentTop);
+            }
+        }
+
+        private void DrawNoBorders(int parentLeft, int parentTop)
+        {
             Console.SetCursorPosition(parentLeft + CtrlPosition.LeftSpacing, parentTop + CtrlPosition.TopSpacing);
-            Console.Write($"{GetMarker()} {Caption} {Text}");
+            Console.Write($"{GetMarker()} {Caption} ");
+            string ctrlText = MaskChars ? new string(Mask, Text.Length) : Text;
+            Console.Write($"{ctrlText}");
             Console.Write(Active ? InputCaret.ToString() + " " : " ");
 
             UpdateControlArea();
+        }
+
+        private void DrawWithBorders(int parentLeft, int parentTop)
+        {
+            // draw initial upper line of box
+            Console.SetCursorPosition(parentLeft + CtrlPosition.LeftSpacing + GetMarker().Length + Caption.Length + 2,
+                                      parentTop + CtrlPosition.TopSpacing - 1);
+            Console.Write(LeftUpCornerSymbol +
+                              new string(HorizontalLineSymbol, CtrlSize.Width == 0 ? 0 : CtrlSize.Width - 2) +
+                              RightUpCornerSymbol);
+            // draw box label
+            Console.SetCursorPosition(parentLeft + CtrlPosition.LeftSpacing, parentTop + CtrlPosition.TopSpacing);
+            Console.Write($"{GetMarker()} {Caption} ");
+
+            // start drawing the textinput box
+            Console.SetCursorPosition(parentLeft + CtrlPosition.LeftSpacing + GetMarker().Length + Caption.Length + 2,
+                                      parentTop + CtrlPosition.TopSpacing);
+            Console.Write(VerticalLineSymbol);
+            // draw box content
+            string ctrlText = MaskChars ? new string(Mask, Text.Length) : Text;
+            Console.Write($"{ctrlText}");
+            Console.Write(Active ? InputCaret.ToString() : "");
+            Console.Write(new string(' ', CtrlSize.Width - ctrlText.Length - (Active ? 3 : 2)) + VerticalLineSymbol);
+
+            // draw lower line of box
+            Console.SetCursorPosition(parentLeft + CtrlPosition.LeftSpacing + GetMarker().Length + Caption.Length + 2,
+                                      parentTop + CtrlPosition.TopSpacing + 1);
+            Console.Write(LeftDownCornerSymbol +
+                              new string(HorizontalLineSymbol, CtrlSize.Width == 0 ? 0 : CtrlSize.Width - 2) +
+                              RightDownCornerSymbol);
         }
 
         private void UpdateControlArea()
@@ -84,7 +138,7 @@ namespace dynamic_menu.Controls
             {
                 Draw();
                 ProcessKeyPress();
-                Thread.Sleep(ControlLoopSleep);
+                Thread.Sleep(Common.ControlLoopSleep);
             } while (Active);
         }
 
@@ -104,7 +158,7 @@ namespace dynamic_menu.Controls
 
         private string GetMarker()
         {
-            return Selected ? SelectionSymbol : new string(' ', SelectionSymbol.Length);
+            return Selected ? Common.SelectionSymbol : new string(' ', Common.SelectionSymbol.Length);
         }
 
         public void ProcessKeyPress()

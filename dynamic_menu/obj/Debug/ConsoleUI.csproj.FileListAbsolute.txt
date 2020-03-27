@@ -1,0 +1,7 @@
+F:\TEMP\DynamicMenuTree\ConsoleMenuLib\dynamic_menu\bin\Debug\dynamic_menu.exe.config
+F:\TEMP\DynamicMenuTree\ConsoleMenuLib\dynamic_menu\bin\Debug\dynamic_menu.exe
+F:\TEMP\DynamicMenuTree\ConsoleMenuLib\dynamic_menu\bin\Debug\dynamic_menu.pdb
+F:\TEMP\DynamicMenuTree\ConsoleMenuLib\dynamic_menu\obj\Debug\ConsoleUI.csprojAssemblyReference.cache
+F:\TEMP\DynamicMenuTree\ConsoleMenuLib\dynamic_menu\obj\Debug\ConsoleUI.csproj.CoreCompileInputs.cache
+F:\TEMP\DynamicMenuTree\ConsoleMenuLib\dynamic_menu\obj\Debug\dynamic_menu.exe
+F:\TEMP\DynamicMenuTree\ConsoleMenuLib\dynamic_menu\obj\Debug\dynamic_menu.pdb

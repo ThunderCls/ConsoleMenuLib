@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dynamic_menu.Controls
+namespace ConsoleUI.Controls
 {
     public class Button : IControl
     {
@@ -13,8 +13,7 @@ namespace dynamic_menu.Controls
         private const char LeftUpCornerSymbol = '┏';
         private const char RightUpCornerSymbol = '┓';
         private const char LeftDownCornerSymbol = '┗';
-        private const char RightDownCornerSymbol = '┛';
-        public const string SelectionSymbol = "►";
+        private const char RightDownCornerSymbol = '┛';        
 
         public string Caption { get; set; }
         public IControl Parent { get; set; }
@@ -24,6 +23,7 @@ namespace dynamic_menu.Controls
         public bool Active { get; set; }
         public int TabIndex { get; set; }
         public event EventHandler OnExecute;
+
         protected virtual void Execute()
         {
             OnExecute?.Invoke(this, null);
@@ -33,6 +33,7 @@ namespace dynamic_menu.Controls
         {
             CtrlPosition = new Position();
             CtrlSize = new Size();
+            Caption = "Button";
         }
 
         public void Activate()
@@ -128,7 +129,7 @@ namespace dynamic_menu.Controls
 
         private string GetMarker()
         {
-            return Selected ? SelectionSymbol : new string(' ', SelectionSymbol.Length);
+            return Selected ? Common.SelectionSymbol : new string(' ', Common.SelectionSymbol.Length);
         }
 
         public void ProcessKeyPress() { }

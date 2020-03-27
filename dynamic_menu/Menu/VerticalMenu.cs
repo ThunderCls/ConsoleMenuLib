@@ -5,7 +5,7 @@ using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dynamic_menu
+namespace ConsoleUI
 {
     /// <summary>
     /// VerticalMenu.cs

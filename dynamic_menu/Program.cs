@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace dynamic_menu
+namespace ConsoleUI
 {
     class Program
     {
@@ -102,7 +102,7 @@ namespace dynamic_menu
             while (true)
             {
                 Thread.Sleep(1000);
-                string name = UI.textInput.Text;
+                string name = UI.txtName.Text;
                 int value = UI.sliderContrast.Value;
             }
         }
@@ -114,7 +114,8 @@ namespace dynamic_menu
 
         public static void ResetValues(Object sender, EventArgs e)
         {
-            UI.textInput.Text = "";
+            UI.txtName.Text = "";
+            UI.txtPassword.Text = "";
             UI.sliderContrast.Value = 0;
             UI.sliderBrightness.Value = 0;
             UI.btnClose.Caption = "Exit";
