@@ -48,7 +48,10 @@
     <Compile Include="Controls\CheckBox.cs" />
     <Compile Include="Controls\Panel.cs" />
     <Compile Include="Controls\IControl.cs" />
+    <Compile Include="Controls\ProgressBar.cs" />
+    <Compile Include="Controls\RadioBox.cs" />
     <Compile Include="Controls\TextInput.cs" />
+    <Compile Include="Controls\TextLabel.cs" />
     <Compile Include="Menu\Menu.cs" />
     <Compile Include="Menu\Entry.cs" />
     <Compile Include="Menu\VerticalMenu.cs" />

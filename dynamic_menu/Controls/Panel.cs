@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleUI.Controls
 {
-    public class Panel : IControl
+    public class Panel : IControl // TODO: implement
     {
         public IControl Parent { get; set; }
         public Position CtrlPosition { get; set; }

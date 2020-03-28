@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleUI.Controls;
 
 namespace ConsoleUI
 {
@@ -16,6 +17,12 @@ namespace ConsoleUI
         public static Controls.Button btnReset;
         public static Controls.Dialog mainDialog;
         public static Controls.CheckBox checkSavePass;
+        public static Controls.RadioBox radMale;
+        public static Controls.RadioBox radFemale;
+        public static Controls.TextLabel lblMsg;
+        public static Controls.ProgressBar progBar;
+        public static Controls.TextLabel lblProgValue;
+
         static private void CreateUI()
         {
             mainDialog = new Controls.Dialog()
@@ -23,11 +30,11 @@ namespace ConsoleUI
                 CtrlPosition = new Controls.Position
                 {
                     LeftSpacing = 3,
-                    TopSpacing = 3
+                    TopSpacing = 1
                 },
                 CtrlSize = new Controls.Size
                 {
-                    Height = 24,
+                    Height = 27,
                     Width = 60
                 },
                 Caption = " Form 1 "
@@ -60,7 +67,7 @@ namespace ConsoleUI
                     LeftPadding = 2
                 }
             };
-            sliderBrightness.OnValueChanged += Program.ValueChanged;
+            sliderBrightness.OnValueChanged += Program.OnBrightnessValueChanged;
 
             txtName = new Controls.TextInput
             {
@@ -107,12 +114,67 @@ namespace ConsoleUI
                 }
             };
 
+            radMale = new Controls.RadioBox
+            {
+                Caption = "Male",
+                CtrlPosition = new Controls.Position
+                {
+                    TopSpacing = 16,
+                    LeftSpacing = 16
+                }
+            };
+            radFemale = new Controls.RadioBox
+            {
+                Caption = "Female",
+                CtrlPosition = new Controls.Position
+                {
+                    TopSpacing = 17,
+                    LeftSpacing = 16
+                }
+            };
+
+            lblMsg = new Controls.TextLabel
+            {
+                Text = "Progress: ",
+                CtrlPosition = new Controls.Position
+                {
+                    TopSpacing = 19,
+                    LeftSpacing = 8
+                }
+            };
+
+            progBar = new Controls.ProgressBar
+            {
+                Value = sliderBrightness.Value,
+                Maximum = 10,
+                Step = 1,
+                CtrlPosition = new Controls.Position
+                {
+                    TopSpacing = 19,
+                    LeftSpacing = 18
+                },
+                CtrlSize = new Size
+                {
+                    Width = 24
+                }
+            };
+
+            lblProgValue = new Controls.TextLabel
+            {
+                Text = $"Value: {progBar.Value}",
+                CtrlPosition = new Controls.Position
+                {
+                    TopSpacing = 19,
+                    LeftSpacing = progBar.CtrlPosition.LeftSpacing + progBar.CtrlSize.Width + 2
+                }
+            };
+
             btnClose = new Controls.Button
             {
                 Caption = "Close",
                 CtrlPosition = new Controls.Position
                 {
-                    TopSpacing = 17,
+                    TopSpacing = 23,
                     LeftSpacing = 35,
                     LeftPadding = 3
                 },
@@ -122,14 +184,14 @@ namespace ConsoleUI
                     Width = 13
                 }
             };
-            btnClose.OnExecute += Program.CloseExecute;
+            btnClose.OnExecute += Program.OnCloseExecute;
 
             btnReset = new Controls.Button
             {
                 Caption = "Reset",
                 CtrlPosition = new Controls.Position
                 {
-                    TopSpacing = 17,
+                    TopSpacing = 23,
                     LeftSpacing = 15,
                     LeftPadding = 3
                 },
@@ -146,6 +208,11 @@ namespace ConsoleUI
             mainDialog.AddControl(txtName);
             mainDialog.AddControl(txtPassword);
             mainDialog.AddControl(checkSavePass);
+            mainDialog.AddControl(radMale);
+            mainDialog.AddControl(radFemale);
+            mainDialog.AddControl(lblMsg);
+            mainDialog.AddControl(progBar);
+            mainDialog.AddControl(lblProgValue);
             mainDialog.AddControl(btnReset);
             mainDialog.AddControl(btnClose);
         }

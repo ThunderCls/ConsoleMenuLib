@@ -16,7 +16,7 @@ namespace ConsoleUI.Controls
         private const char LeftDownCornerSymbol = '┗';
         private const char RightDownCornerSymbol = '┛';        
 
-        private List<IControl> Controls { get; set; }
+        public List<IControl> Controls { get; set; }
         private int ControlIndex { get; set; }
         public IControl Parent { get; set; }
         public Position CtrlPosition { get; set; }
@@ -84,6 +84,19 @@ namespace ConsoleUI.Controls
         {
             // TODO: implement with TabIndex
             ControlIndex = (ControlIndex - 1 >= 0) ? ControlIndex -= 1 : Controls.Count - 1;
+            IControl ctrl = Controls[ControlIndex];
+
+            int ctrlIndex = 0;
+            // filter control selection
+            while (ctrl.GetType() == typeof(TextLabel) ||
+                   ctrl.GetType() == typeof(ProgressBar) &&
+                   ctrlIndex < Controls.Count)
+            {
+                ControlIndex = (ControlIndex - 1 >= 0) ? ControlIndex -= 1 : Controls.Count - 1;
+                ctrl = Controls[ControlIndex];
+                ctrlIndex++;
+            }
+
             Controls.ForEach(x => x.Deselect());
             Controls[ControlIndex].Select();
         }
@@ -92,6 +105,19 @@ namespace ConsoleUI.Controls
         {
             // TODO: implement with TabIndex
             ControlIndex = (ControlIndex + 1 < Controls.Count) ? ControlIndex += 1 : 0;
+            IControl ctrl = Controls[ControlIndex];
+
+            int ctrlIndex = 0;
+            // filter control selection
+            while (ctrl.GetType() == typeof(TextLabel) ||
+                   ctrl.GetType() == typeof(ProgressBar) &&
+                   ctrlIndex < Controls.Count)
+            {
+                ControlIndex = (ControlIndex + 1 < Controls.Count) ? ControlIndex += 1 : 0;
+                ctrl = Controls[ControlIndex];
+                ctrlIndex++;
+            }
+
             Controls.ForEach(x => x.Deselect());
             Controls[ControlIndex].Select();
         }

@@ -10,9 +10,6 @@ namespace ConsoleUI
 {
     class Program
     {
-        static List<ConsoleColor> colors = new List<ConsoleColor> { ConsoleColor.Black, ConsoleColor.DarkGray, ConsoleColor.Gray };
-        static int colorIndex;
-        
         static void Main(string[] args)
         {
             // main menu setup
@@ -107,7 +104,7 @@ namespace ConsoleUI
             }
         }
 
-        public static void CloseExecute(Object sender, EventArgs e)
+        public static void OnCloseExecute(Object sender, EventArgs e)
         {
             Environment.Exit(0);
         }
@@ -116,19 +113,19 @@ namespace ConsoleUI
         {
             UI.txtName.Text = "";
             UI.txtPassword.Text = "";
+            UI.lblProgValue.Text = "";
             UI.sliderContrast.Value = 0;
             UI.sliderBrightness.Value = 0;
+            UI.radMale.Checked = 
+                UI.radFemale.Checked = 
+                    UI.checkSavePass.Checked = false;
             UI.btnClose.Caption = "Exit";
         }
 
-        public static void ValueChanged(object sender, EventArgs e)
+        public static void OnBrightnessValueChanged(object sender, EventArgs e)
         {
-            colorIndex = ((Controls.Slider)sender).Value % 3;
-            //Color c1 = Color.Red;
-            //Color c2 = Color.FromArgb(c1.A,
-            //    (int)(c1.R * 0.8), (int)(c1.G * 0.8), (int)(c1.B * 0.8));
-            Console.BackgroundColor = colors[colorIndex];
-            //Console.Clear();
+            UI.progBar.Value = UI.sliderBrightness.Value;
+            UI.lblProgValue.Text = $"Value: {UI.progBar.Value}";
         }
     }
 }

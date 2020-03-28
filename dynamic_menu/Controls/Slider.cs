@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +21,26 @@ namespace ConsoleUI.Controls
         }
 
         public string Caption { get; set; }
-        public int Value { get; set; }
+
+        private int _value;
+        public int Value
+        {
+            get => _value;
+            set
+            {
+                if (Parent == null)
+                {
+                    _value = value;
+                }
+                else
+                {
+                    // draw current text
+                    _value = value;
+                    OnValueChange();
+                }
+            }
+        }
+
         public int Maximum { get; set; }
         public int Minimum { get; set; }
         public int Step { get; set; }
@@ -36,8 +56,7 @@ namespace ConsoleUI.Controls
         public event EventHandler OnValueChanged;
         protected virtual void OnValueChange()
         {
-            EventHandler handler = OnValueChanged;
-            handler?.Invoke(this, null);
+            OnValueChanged?.Invoke(this, null);
         }
 
         public Slider()
@@ -78,13 +97,13 @@ namespace ConsoleUI.Controls
         private void MoveMarkerLeft()
         {
             // TODO: implement steps instead
-            Value = Value == Minimum ? Minimum : Value -= 1;            
+            _value = _value == Minimum ? Minimum : _value -= 1;            
         }
 
         private void MoveMarkerRight()
         {
             // TODO: implement steps instead
-            Value = Value == Maximum ? Maximum : Value += 1;
+            _value = _value == Maximum ? Maximum : _value += 1;
         }
 
         public void Activate()
@@ -101,10 +120,7 @@ namespace ConsoleUI.Controls
 
         public async Task ActivateAsync()
         {
-            await Task.Run(() =>
-            {
-                Activate();
-            });
+            await Task.Run(Activate);
         }
 
         private void Deactivate()
@@ -116,6 +132,8 @@ namespace ConsoleUI.Controls
 
         public void Draw()
         {
+            // TODO: implement scaling maximum/value/step with control width
+
             //Console.BackgroundColor = Active ? ConsoleColor.DarkGreen : ConsoleColor.Black;
             Console.ForegroundColor = Active ? ConsoleColor.White : ConsoleColor.Gray;
 
@@ -127,11 +145,11 @@ namespace ConsoleUI.Controls
 
             for (int index = Minimum; index <= Maximum; index++)
             {
-                Console.Write(index == Value ? SliderMark : SliderLine);
+                Console.Write(index == _value ? SliderMark : SliderLine);
             }
-            Console.Write(new string(' ', CtrlPosition.LeftPadding) + 
-                          Value + 
-                          new string(' ', Convert.ToString(Maximum).Length - Convert.ToString(Value).Length));
+            Console.Write(new string(' ', CtrlPosition.LeftPadding) +
+                          _value + 
+                          new string(' ', Convert.ToString(Maximum).Length - Convert.ToString(_value).Length));
         }
 
 

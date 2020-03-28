@@ -144,10 +144,7 @@ namespace ConsoleUI.Controls
 
         public async Task ActivateAsync()
         {
-            await Task.Run(() =>
-            {
-                Activate();
-            });
+            await Task.Run(Activate);
         }
 
         private void Deactivate()

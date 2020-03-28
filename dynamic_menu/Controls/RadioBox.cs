@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ConsoleUI.Controls
 {
-    public class CheckBox : IControl
+    public class RadioBox : IControl
     {
-        private const string CheckBoxChecked = "[√]";
-        private const string CheckBoxUnChecked = "[ ]";
+        private const string RadioBoxChecked = "●";
+        private const string RadioBoxUnChecked = "⃝";
 
         public IControl Parent { get; set; }
         public Position CtrlPosition { get; set; }
@@ -41,16 +41,11 @@ namespace ConsoleUI.Controls
             OnStateChanged?.Invoke(this, null);
         }
 
-        public CheckBox()
+        public RadioBox()
         {
             CtrlPosition = new Position();
             CtrlSize = new Size();
-            Caption = "CheckBox";
-        }
-
-        public void Activate()
-        {
-            Checked = !Checked;
+            Caption = "RadioBox";
         }
 
         public void Draw()
@@ -59,8 +54,22 @@ namespace ConsoleUI.Controls
             int parentTop = Parent?.CtrlPosition.TopSpacing ?? 0;
 
             Console.SetCursorPosition(parentLeft + CtrlPosition.LeftSpacing, parentTop + CtrlPosition.TopSpacing);
-            string checkBoxSymbol = Checked ? CheckBoxChecked : CheckBoxUnChecked;
+            string checkBoxSymbol = Checked ? RadioBoxChecked : RadioBoxUnChecked;
             Console.WriteLine($"{GetMarker()} {checkBoxSymbol} {Caption}");
+        }
+
+        public void Activate()
+        {
+            // uncheck every other radio
+            ((Dialog)Parent).Controls.Where(x => x.GetType() == typeof(RadioBox))
+                                     .Select(x =>
+                                     {
+                                         ((RadioBox)x)._checked = false;
+                                         return x;
+                                     }).ToList();
+
+            // check the current radio
+            Checked = true;
         }
 
         public async Task ActivateAsync()
