@@ -53,20 +53,20 @@ namespace ConsoleUI.Controls
             int parentLeft = Parent?.CtrlPosition.LeftSpacing ?? 0;
             int parentTop = Parent?.CtrlPosition.TopSpacing ?? 0;
 
-            Console.SetCursorPosition(parentLeft + CtrlPosition.LeftSpacing, parentTop + CtrlPosition.TopSpacing);
+            Console.SetCursorPosition(parentLeft + CtrlPosition.LeftSpacing + GetMarker().Length + 1, parentTop + CtrlPosition.TopSpacing + 1);
             string checkBoxSymbol = Checked ? RadioBoxChecked : RadioBoxUnChecked;
-            Console.WriteLine($"{GetMarker()} {checkBoxSymbol} {Caption}");
+            Console.Write($"{GetMarker()} {checkBoxSymbol} {Caption}");
         }
 
         public void Activate()
         {
-            // uncheck every other radio
-            ((Dialog)Parent).Controls.Where(x => x.GetType() == typeof(RadioBox))
-                                     .Select(x =>
-                                     {
-                                         ((RadioBox)x)._checked = false;
-                                         return x;
-                                     }).ToList();
+            // uncheck every other radio under the same container
+            ((IContainer)Parent).Controls.Where(x => x.GetType() == typeof(RadioBox))
+                                         .Select(x =>
+                                         {
+                                            ((RadioBox)x)._checked = false;
+                                            return x;
+                                         }).ToList();
 
             // check the current radio
             Checked = true;

@@ -10,7 +10,6 @@ namespace ConsoleUI.Controls
     public static class Common
     {
         public static string SelectionSymbol = "►";
-        public static int ControlLoopSleep = 100;
     }    
 
     public class Position
@@ -35,7 +34,6 @@ namespace ConsoleUI.Controls
         Size CtrlSize { get; set; }
         bool Selected { get; set; }
         bool Active { get; set; }
-        int TabIndex { get; set; }
 
         void Draw();
         void Activate();

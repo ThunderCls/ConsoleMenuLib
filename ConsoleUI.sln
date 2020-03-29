@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleUI", "dynamic_menu\ConsoleUI.csproj", "{D60D358B-5F8B-4A9E-830C-59FF54EF723B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleUI", "ConsoleUI\ConsoleUI.csproj", "{D60D358B-5F8B-4A9E-830C-59FF54EF723B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

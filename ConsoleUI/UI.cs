@@ -19,14 +19,21 @@ namespace ConsoleUI
         public static Controls.CheckBox checkSavePass;
         public static Controls.RadioBox radMale;
         public static Controls.RadioBox radFemale;
+        public static Controls.RadioBox radWhite;
+        public static Controls.RadioBox radBlack;
         public static Controls.TextLabel lblMsg;
         public static Controls.ProgressBar progBar;
         public static Controls.TextLabel lblProgValue;
+        public static Controls.GroupBox groupSex;
+        public static Controls.GroupBox groupColor;
 
-        static private void CreateUI()
+        private static void CreateUI()
         {
             mainDialog = new Controls.Dialog()
             {
+                //Borders = false,
+                ConsoleWindowCentered = true,
+                ConsoleWindowAutoSize = true,
                 CtrlPosition = new Controls.Position
                 {
                     LeftSpacing = 3,
@@ -34,10 +41,10 @@ namespace ConsoleUI
                 },
                 CtrlSize = new Controls.Size
                 {
-                    Height = 27,
+                    Height = 35,
                     Width = 60
                 },
-                Caption = " Form 1 "
+                Caption = " Sample Dialog "
             };
 
             sliderContrast = new Controls.Slider()
@@ -114,13 +121,27 @@ namespace ConsoleUI
                 }
             };
 
+            groupSex = new Controls.GroupBox
+            {
+                Caption = " Sex ",
+                CtrlPosition = new Controls.Position
+                {
+                    TopSpacing = 16,
+                    LeftSpacing = 18
+                },
+                CtrlSize = new Size
+                {
+                    Width = 23,
+                    Height = 5
+                }
+            };
             radMale = new Controls.RadioBox
             {
                 Caption = "Male",
                 CtrlPosition = new Controls.Position
                 {
-                    TopSpacing = 16,
-                    LeftSpacing = 16
+                    TopSpacing = 2,
+                    LeftSpacing = 2
                 }
             };
             radFemale = new Controls.RadioBox
@@ -128,17 +149,54 @@ namespace ConsoleUI
                 Caption = "Female",
                 CtrlPosition = new Controls.Position
                 {
-                    TopSpacing = 17,
-                    LeftSpacing = 16
+                    TopSpacing = 2,
+                    LeftSpacing = radMale.Caption.Length + 8
                 }
             };
+            groupSex.AddControl(radMale);
+            groupSex.AddControl(radFemale);
+
+            groupColor = new Controls.GroupBox
+            {
+                Caption = " Color ",
+                CtrlPosition = new Controls.Position
+                {
+                    TopSpacing = groupSex.CtrlPosition.TopSpacing + groupSex.CtrlSize.Height + 1,
+                    LeftSpacing = 18
+                },
+                CtrlSize = new Size
+                {
+                    Width = 23,
+                    Height = 5
+                }
+            };
+            radWhite = new Controls.RadioBox
+            {
+                Caption = "White",
+                CtrlPosition = new Controls.Position
+                {
+                    TopSpacing = 2,
+                    LeftSpacing = 2
+                }
+            };
+            radBlack = new Controls.RadioBox
+            {
+                Caption = "Black",
+                CtrlPosition = new Controls.Position
+                {
+                    TopSpacing = 2,
+                    LeftSpacing = radWhite.Caption.Length + 8
+                }
+            };
+            groupColor.AddControl(radWhite);
+            groupColor.AddControl(radBlack);
 
             lblMsg = new Controls.TextLabel
             {
                 Text = "Progress: ",
                 CtrlPosition = new Controls.Position
                 {
-                    TopSpacing = 19,
+                    TopSpacing = 28,
                     LeftSpacing = 8
                 }
             };
@@ -150,7 +208,7 @@ namespace ConsoleUI
                 Step = 1,
                 CtrlPosition = new Controls.Position
                 {
-                    TopSpacing = 19,
+                    TopSpacing = 28,
                     LeftSpacing = 18
                 },
                 CtrlSize = new Size
@@ -164,7 +222,7 @@ namespace ConsoleUI
                 Text = $"Value: {progBar.Value}",
                 CtrlPosition = new Controls.Position
                 {
-                    TopSpacing = 19,
+                    TopSpacing = 28,
                     LeftSpacing = progBar.CtrlPosition.LeftSpacing + progBar.CtrlSize.Width + 2
                 }
             };
@@ -174,7 +232,7 @@ namespace ConsoleUI
                 Caption = "Close",
                 CtrlPosition = new Controls.Position
                 {
-                    TopSpacing = 23,
+                    TopSpacing = 30,
                     LeftSpacing = 35,
                     LeftPadding = 3
                 },
@@ -191,7 +249,7 @@ namespace ConsoleUI
                 Caption = "Reset",
                 CtrlPosition = new Controls.Position
                 {
-                    TopSpacing = 23,
+                    TopSpacing = 30,
                     LeftSpacing = 15,
                     LeftPadding = 3
                 },
@@ -208,8 +266,8 @@ namespace ConsoleUI
             mainDialog.AddControl(txtName);
             mainDialog.AddControl(txtPassword);
             mainDialog.AddControl(checkSavePass);
-            mainDialog.AddControl(radMale);
-            mainDialog.AddControl(radFemale);
+            mainDialog.AddControl(groupSex);
+            mainDialog.AddControl(groupColor);
             mainDialog.AddControl(lblMsg);
             mainDialog.AddControl(progBar);
             mainDialog.AddControl(lblProgValue);

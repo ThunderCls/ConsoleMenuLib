@@ -114,7 +114,6 @@ namespace ConsoleUI.Controls
             {
                 Draw();
                 ProcessKeyPress();
-                Thread.Sleep(Common.ControlLoopSleep);
             } while (Active);
         }
 

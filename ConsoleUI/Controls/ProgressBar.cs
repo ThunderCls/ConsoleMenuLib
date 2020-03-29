@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace ConsoleUI.Controls
 {
+    // See: https://github.com/Mpdreamz/shellprogressbar
+    // for ideas
     public class ProgressBar : IControl
     {
-        private const char LeftSymbol = '[';
-        private const char FillSymbol = '■';
-        private const char RightSymbol = ']';
+        private const char LeftSymbol = '[';//'▓';//
+        private const char FillSymbol = '■';//'█';
+        private const char RightSymbol = ']';//'▓';
 
         public IControl Parent { get; set; }
         public Position CtrlPosition { get; set; }
