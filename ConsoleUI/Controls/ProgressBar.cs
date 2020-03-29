@@ -74,6 +74,14 @@ namespace ConsoleUI.Controls
                               RightSymbol);
         }
 
+        public bool CoordinateInsideClientArea(int x, int y)
+        {
+            return (x >= CtrlPosition.LeftSpacing &&
+                    x <= CtrlPosition.LeftSpacing + CtrlSize.Width - 1 &&
+                    y >= CtrlPosition.TopSpacing &&
+                    y <= CtrlPosition.TopSpacing + CtrlSize.Height - 1);
+        }
+
         public void Activate() { }
 
         public async Task ActivateAsync() { }

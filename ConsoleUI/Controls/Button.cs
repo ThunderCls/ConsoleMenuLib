@@ -43,10 +43,15 @@ namespace ConsoleUI.Controls
 
         public async Task ActivateAsync()
         {
-            await Task.Run(() =>
-            {
-                Activate();
-            });
+            await Task.Run(Activate);
+        }
+
+        public bool CoordinateInsideClientArea(int x, int y)
+        {
+            return (x >= CtrlPosition.LeftSpacing &&
+                    x <= CtrlPosition.LeftSpacing + CtrlSize.Width - 1 &&
+                    y >= CtrlPosition.TopSpacing &&
+                    y <= CtrlPosition.TopSpacing + CtrlSize.Height - 1);
         }
 
         public void Select()

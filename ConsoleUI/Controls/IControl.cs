@@ -41,6 +41,7 @@ namespace ConsoleUI.Controls
         void ProcessKeyPress();
         void Select();
         void Deselect();
+        bool CoordinateInsideClientArea(int x, int y);
         //TODO: implement a ReDraw() function to repaint the control space only and it's children
     }
 }

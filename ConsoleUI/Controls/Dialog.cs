@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ConsoleUI.Listener;
 
 namespace ConsoleUI.Controls
 {
@@ -280,11 +281,32 @@ namespace ConsoleUI.Controls
                 CenterConsoleWindow();
             }
 
+            ConsoleListener.SetupListener();
+            ConsoleListener.Start();
+            ConsoleListener.MouseEvent += ConsoleMouseEvent;
+
             do
             {
-                Draw();
-                ProcessKeyPress();
-            } while (Active);
+                //Draw();
+                if (Active)
+                {
+                    Draw();
+                    //ProcessKeyPress();
+                }
+            } while (true);
+        }
+
+        public void ConsoleMouseEvent(NativeMethods.MOUSE_EVENT_RECORD r)
+        {
+            NativeMethods.COORD coord = r.dwMousePosition;
+
+            if (r.dwButtonState == NativeMethods.MOUSE_EVENT_RECORD.FROM_LEFT_1ST_BUTTON_PRESSED &&
+                r.dwEventFlags != NativeMethods.MOUSE_EVENT_RECORD.MOUSE_MOVED)
+            {
+                Active = false;
+                Controls.FirstOrDefault(x => x.CoordinateInsideClientArea(coord.X, coord.Y) && !x.Active)?.Activate();
+                Active = true;
+            }
         }
 
         public async Task ActivateAsync()
@@ -308,6 +330,14 @@ namespace ConsoleUI.Controls
             int x = scr.WorkingArea.Left + (scr.WorkingArea.Width - (rc.right - rc.left)) / 2;
             int y = scr.WorkingArea.Top + (scr.WorkingArea.Height - (rc.bottom - rc.top)) / 2;
             MoveWindow(hWin, x, y, rc.right - rc.left, rc.bottom - rc.top, false);
+        }
+
+        public bool CoordinateInsideClientArea(int x, int y)
+        {
+            return (x >= CtrlPosition.LeftSpacing &&
+                    x <= CtrlPosition.LeftSpacing + CtrlSize.Width - 1 &&
+                    y >= CtrlPosition.TopSpacing &&
+                    y <= CtrlPosition.TopSpacing + CtrlSize.Height - 1);
         }
 
         public void Select() { }
